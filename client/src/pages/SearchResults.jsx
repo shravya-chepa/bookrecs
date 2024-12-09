@@ -1,27 +1,73 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import googleBooksApi from '../services/googleBooks';
+import { addToShelf, fetchUserBooks } from '../services/api';
 import '../components/styles/SearchResults.css';
 
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
   const [books, setBooks] = useState([]);
-  const [selectedBook, setSelectedBook] = useState(null); // For modal data
+  const [userBooks, setUserBooks] = useState([]); // Store user's books
+  const [selectedBook, setSelectedBook] = useState(null);
+  const [message, setMessage] = useState('');
   const query = searchParams.get('query') || '';
 
   useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await fetchUserBooks();
+        setUserBooks(response.books);
+      } catch (error) {
+        console.error('Error fetching user books:', error);
+      }
+    };
+    fetchBooks();
+  }, []);
+
+  useEffect(() => {
     if (query) {
-      googleBooksApi.searchBooks(query).then((results) => setBooks(results));
+      googleBooksApi
+        .searchBooks(query)
+        .then((results) => setBooks(results))
+        .catch((err) => {
+          console.error('Error fetching search results:', err);
+          setMessage('Error fetching search results.');
+        });
     }
   }, [query]);
 
-  const handleAddToShelf = (book, shelf) => {
-    console.log(`Add "${book.title}" to ${shelf} shelf`);
-    // Implement your backend integration to save to MongoDB here.
+  const getBookShelf = (bookId) => {
+    const book = userBooks.find((book) => book.book_id === bookId);
+    return book ? book.shelf : null;
+  };
+
+  const handleAddToShelf = async (book, shelf) => {
+    try {
+      const payload = {
+        book_id: book.id,
+        title: book.title,
+        description: book.description,
+        genre: book.categories?.[0] || 'Unknown',
+        shelf,
+        book_image: book.coverImage
+      };
+
+      console.log('Sending payload to backend:', payload);
+
+      const response = await addToShelf(payload);
+      setMessage(response.message);
+
+      // Update user's books after adding
+      setUserBooks((prevBooks) => [...prevBooks, payload]);
+    } catch (error) {
+      console.error('Error adding book to shelf:', error.response || error);
+      setMessage(error.response?.data?.detail || 'Error adding book to shelf');
+    }
   };
 
   const handleCloseModal = () => {
-    setSelectedBook(null); // Close the modal
+    setSelectedBook(null);
+    setMessage('');
   };
 
   return (
@@ -33,20 +79,16 @@ const SearchResults = () => {
             <img
               src={book.coverImage}
               alt={book.title}
-              onClick={() => setSelectedBook(book)} // Open modal with book data
+              onClick={() => setSelectedBook(book)}
             />
             <h3>{book.title}</h3>
           </div>
         ))}
       </div>
 
-      {/* Modal */}
       {selectedBook && (
         <div className="modal-backdrop" onClick={handleCloseModal}>
-          <div
-            className="modal-content"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
-          >
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-btn" onClick={handleCloseModal}>
               &times;
             </button>
@@ -55,21 +97,32 @@ const SearchResults = () => {
             <p><strong>Description:</strong> {selectedBook.description}</p>
             <p><strong>Page Count:</strong> {selectedBook.pageCount}</p>
             <p><strong>Published Date:</strong> {selectedBook.publishedDate}</p>
-            <button
-              onClick={() => handleAddToShelf(selectedBook, 'TBR')}
-              className="add-to-shelf-btn"
-            >
-              Add to TBR
-            </button>
-            <button
-              onClick={() => handleAddToShelf(selectedBook, 'Finished')}
-              className="add-to-shelf-btn"
-            >
-              Add to Finished
-            </button>
+            <p><strong>Genre(s):</strong> {selectedBook.categories.join(', ')}</p>
+            {getBookShelf(selectedBook.id) ? (
+              <p className="shelf-message">
+                This book is already in your "{getBookShelf(selectedBook.id)}" shelf.
+              </p>
+            ) : (
+              <>
+                <button
+                  onClick={() => handleAddToShelf(selectedBook, 'TBR')}
+                  className="add-to-shelf-btn"
+                >
+                  Add to TBR
+                </button>
+                <button
+                  onClick={() => handleAddToShelf(selectedBook, 'Finished')}
+                  className="add-to-shelf-btn"
+                >
+                  Add to Finished
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}
+
+      {message && <p className="status-message">{message}</p>}
     </div>
   );
 };

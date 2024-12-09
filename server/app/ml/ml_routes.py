@@ -3,9 +3,9 @@ from app.ml.ml_models import BookRequest, RecommendationResponse, MultipleBooksR
 from app.ml.ml_recommender import get_recommendations_for_new_book, get_recommendations_for_multiple_books
 
 
-book_router = APIRouter()
+ml_router = APIRouter()
 
-@book_router.post("/recommendations", response_model=RecommendationResponse)
+@ml_router.post("/recommendations", response_model=RecommendationResponse)
 def recommend_for_new_book(request: BookRequest):
     recommendations = get_recommendations_for_new_book(
         title=request.title,
@@ -18,7 +18,7 @@ def recommend_for_new_book(request: BookRequest):
         "recommendations": recommendations
     }
 
-@book_router.post("/recommendations/multiple", response_model=RecommendationResponse)
+@ml_router.post("/recommendations/multiple", response_model=RecommendationResponse)
 def recommend_for_multiple_books(request: MultipleBooksRequest):
     recommendations = get_recommendations_for_multiple_books(
         books=request.books,

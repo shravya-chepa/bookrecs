@@ -22,7 +22,8 @@ const searchBooks = async (query) => {
     coverImage: item.volumeInfo.imageLinks?.thumbnail || '',
     authors: item.volumeInfo.authors || ['Unknown Author'],
     publishedDate: item.volumeInfo.publishedDate || 'Unknown',
-    pageCount: item.volumeInfo.pageCount || "Unknown"
+    pageCount: item.volumeInfo.pageCount || "Unknown",
+    categories: item.volumeInfo.categories || ["Unknown"]
   }));
 };
 

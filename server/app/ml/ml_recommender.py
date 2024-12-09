@@ -13,12 +13,27 @@ books_df = preprocess_dataset(books_df)
 vectorizer = TfidfVectorizer(stop_words="english", max_features=10000)
 tfidf_matrix = vectorizer.fit_transform(books_df["features"])
 
+# Define weights for the features
+TITLE_WEIGHT = 0.5
+DESCRIPTION_WEIGHT = 1.0
+GENRE_WEIGHT = 0.8
+
+def apply_weighted_features(title: str, description: str, genre: str) -> str:
+    """
+    Combine features with weights applied as repetition.
+    """
+    weighted_title = (clean_text(title) + " ") * int(TITLE_WEIGHT * 10)
+    weighted_description = (clean_text(description) + " ") * int(DESCRIPTION_WEIGHT * 10)
+    weighted_genre = (clean_text(genre) + " ") * int(GENRE_WEIGHT * 10)
+    
+    return weighted_title + weighted_description + weighted_genre
+
 def get_recommendations_for_new_book(title: str, description: str, genre: str, num_recommendations: int = 5):
     """
     Recommend books from the database for a new book input.
     """
-    # Combine and clean input features
-    input_features = clean_text(title) + " " + clean_text(description) + " " + clean_text(genre)
+    # Combine and clean input features with weights
+    input_features = apply_weighted_features(title, description, genre)
     
     # Vectorize the input features
     input_vector = vectorizer.transform([input_features])
@@ -38,9 +53,9 @@ def get_recommendations_for_multiple_books(books: list, num_recommendations: int
     """
     combined_vector = None
 
-    # Combine all input book features into a single vector
+    # Combine all input book features into a single weighted vector
     for book in books:
-        input_features = clean_text(book.title) + " " + clean_text(book.description) + " " + clean_text(book.genre)
+        input_features = apply_weighted_features(book.title, book.description, book.genre)
         input_vector = vectorizer.transform([input_features])
         if combined_vector is None:
             combined_vector = input_vector
