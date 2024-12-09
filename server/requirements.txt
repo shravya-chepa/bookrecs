@@ -4,3 +4,8 @@ pandas
 numpy
 scikit-learn
 nltk
+passlib
+pymongo
+python-jose[cryptography]
+python-dotenv
+bcrypt
