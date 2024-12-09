@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from app.models import BookRequest, RecommendationResponse, MultipleBooksRequest
-from app.recommender import get_recommendations_for_new_book, get_recommendations_for_multiple_books
+from app.ml.ml_models import BookRequest, RecommendationResponse, MultipleBooksRequest
+from app.ml.ml_recommender import get_recommendations_for_new_book, get_recommendations_for_multiple_books
 
 
 book_router = APIRouter()

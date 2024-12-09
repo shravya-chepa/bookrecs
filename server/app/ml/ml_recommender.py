@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from app.preprocess import preprocess_dataset, clean_text
+from app.ml.ml_preprocess import preprocess_dataset, clean_text
 
 # Load the dataset
 books_df = pd.read_csv("data/books.csv")

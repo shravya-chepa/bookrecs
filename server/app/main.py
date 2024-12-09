@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes import book_router
+from app.ml.ml_routes import book_router
 from app.auth.auth_routes import auth_router
 from fastapi.middleware.cors import CORSMiddleware
 
