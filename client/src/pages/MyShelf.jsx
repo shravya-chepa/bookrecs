@@ -85,11 +85,13 @@ const MyShelf = () => {
   return (
     <div className="my-shelf">
       <h1>My Shelf</h1>
-      <h2>TBR</h2>
-      {renderBooks('TBR')}
-      <h2 className='h2-finished'>Finished</h2>
-      {renderBooks('Finished')}
-
+      <div className="shelf-container">
+        <h2>TBR</h2>
+        {renderBooks('TBR')}
+        <h2 className="h2-finished">Finished</h2>
+        {renderBooks('Finished')}
+      </div>
+  
       {selectedBook && (
         <div className="modal-backdrop" onClick={handleCloseModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -123,10 +125,11 @@ const MyShelf = () => {
           </div>
         </div>
       )}
-
+  
       {message && <p className="status-message">{message}</p>}
     </div>
   );
+  
 };
 
 export default MyShelf;

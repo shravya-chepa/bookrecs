@@ -99,7 +99,8 @@ const SearchResults = () => {
             <p><strong>Genre(s):</strong> {selectedBook.categories.join(', ')}</p>
             {getBookShelf(selectedBook.id) ? (
               <p className="shelf-message">
-                This book is already in your "{getBookShelf(selectedBook.id)}" shelf.
+                <strong>This book is in your "{getBookShelf(selectedBook.id)}" shelf.
+                  </strong>
               </p>
             ) : (
               <>

@@ -164,7 +164,7 @@ const Home = () => {
             </p>
             {getBookShelf(selectedBook.id || selectedBook.title) ? (
               <p className="shelf-message">
-                This book is already in your "{getBookShelf(selectedBook.id || selectedBook.title)}" shelf.
+                <strong>This book is in your "{getBookShelf(selectedBook.id || selectedBook.title)}" shelf.</strong>
               </p>
             ) : (
               <>

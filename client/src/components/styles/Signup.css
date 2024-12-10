@@ -1,0 +1,76 @@
+.signup-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #E2DCC8; /* Light background for the form */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a clean look */
+    max-width: 400px;
+    margin: 50px auto; /* Center the form on the page */
+    font-family: Arial, sans-serif;
+    box-sizing: border-box; /* Ensure consistent box-sizing for padding and borders */
+  }
+  
+  .signup-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .signup-form label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    width: 100%; /* Ensure labels and inputs are aligned to full width */
+    text-align: left; /* Align label text to the left */
+    color: #000000;
+  }
+  
+  .signup-form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+    width: 100%; /* Ensure inputs take up the full width of the form */
+    box-sizing: border-box; /* Include padding and borders in the element's total width */
+    background-color: #fff;
+  }
+  
+  .signup-form input:focus {
+    border-color: #008c9e; /* Highlight on focus */
+    outline: none;
+    background-color: #f0f8ff; /* Slightly lighter background on focus */
+  }
+  
+  .signup-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #0F3D3E;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%; /* Full-width button */
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signup-form button:hover {
+    background-color: #008c9e; /* Darker blue on hover */
+  }
+  
+  .signup-form p {
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .signup-form p[style] {
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/api';
+import '../components/styles/Login.css'; // Import the CSS file for styling
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -29,7 +30,7 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="login-form">
       <h2>Login</h2>
       <label>
         Email
@@ -54,8 +55,8 @@ const Login = () => {
         />
       </label>
       <button type="submit">Login</button>
-      {message && <p style={{ color: 'green' }}>{message}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {message && <p className="success-message">{message}</p>}
+      {error && <p className="error-message">{error}</p>}
     </form>
   );
 };
