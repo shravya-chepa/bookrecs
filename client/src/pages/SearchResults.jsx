@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import googleBooksApi from '../services/googleBooks';
+import {searchBooks} from '../services/googleBooks';
 import { addToShelf, fetchUserBooks } from '../services/api';
 import '../components/styles/SearchResults.css';
 
@@ -26,8 +26,7 @@ const SearchResults = () => {
 
   useEffect(() => {
     if (query) {
-      googleBooksApi
-        .searchBooks(query)
+      searchBooks(query)
         .then((results) => setBooks(results))
         .catch((err) => {
           console.error('Error fetching search results:', err);

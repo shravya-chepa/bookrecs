@@ -43,6 +43,13 @@ export const addToShelf = async (bookData) => {
   return response.data;
 };
 
+export const updateShelf = async (bookId, newShelf) => {
+  const response = await api.put(`/api/bookshelf/${bookId}/shelf`, { new_shelf: newShelf });
+  return response.data;
+};
+
+
+
 export const fetchUserBooks = async () => {
   const response = await api.get('/api/bookshelf');
   return response.data;

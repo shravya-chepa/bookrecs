@@ -33,6 +33,6 @@ async def login(request: LoginRequest):
     
     # Generate JWT token
     access_token = create_access_token(
-        data={"sub": user["email"]}, expires_delta=timedelta(minutes=30)
+        data={"sub": user["email"]}, expires_delta=timedelta(minutes=2880)
     )
     return {"access_token": access_token, "token_type": "bearer"}

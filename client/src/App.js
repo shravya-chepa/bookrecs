@@ -30,14 +30,14 @@ const App = () => (
               </PrivateRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/browse-by-genre"
             element={
               <PrivateRoute>
                 <BrowseByGenre />
               </PrivateRoute>
             }
-          />
+          /> */}
           <Route
             path="/search"
             element={

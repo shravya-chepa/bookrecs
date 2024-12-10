@@ -23,3 +23,14 @@ def delete_book_from_shelf(user_id: str, book_id: str):
     """
     result = bookshelf_collection.delete_one({"user_id": user_id, "book_id": book_id})
     return result.deleted_count > 0  # Returns True if a document was deleted
+
+def update_book_shelf(user_id: str, book_id: str, new_shelf: str):
+    """
+    Update the shelf of a book for a specific user.
+    """
+    print("Book ID:", book_id, "New shelf:", new_shelf)
+    result = bookshelf_collection.update_one(
+        {"user_id": user_id, "book_id": book_id},  # Find the book by user ID and book ID
+        {"$set": {"shelf": new_shelf}}  # Update the shelf field
+    )
+    return result.modified_count > 0  # Returns True if a document was updated

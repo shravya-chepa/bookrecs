@@ -21,3 +21,5 @@ class BookResponse(BaseModel):
 class UserBooksResponse(BaseModel):
     books: list[BookResponse]
 
+class UpdateShelfRequest(BaseModel):
+    new_shelf: str = Field(..., pattern="^(TBR|Finished)$")

@@ -29,7 +29,7 @@ const Navbar = () => {
         {token ? (
           <>
             <Link to="/my-shelf">My Shelf</Link>
-            <Link to="/browse-by-genre">Browse by Genre</Link>
+            {/* <Link to="/browse-by-genre">Browse by Genre</Link> */}
             <button className="logout-button" onClick={handleLogout}>
               Logout
             </button>

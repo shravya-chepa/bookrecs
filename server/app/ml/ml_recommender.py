@@ -14,9 +14,10 @@ vectorizer = TfidfVectorizer(stop_words="english", max_features=10000)
 tfidf_matrix = vectorizer.fit_transform(books_df["features"])
 
 # Define weights for the features
-TITLE_WEIGHT = 0.5
-DESCRIPTION_WEIGHT = 1.0
-GENRE_WEIGHT = 0.8
+TITLE_WEIGHT = 0.2
+DESCRIPTION_WEIGHT = 1
+GENRE_WEIGHT = 10
+
 
 def apply_weighted_features(title: str, description: str, genre: str) -> str:
     """

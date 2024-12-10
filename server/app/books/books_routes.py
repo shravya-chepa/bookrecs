@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
-from app.books.books_models import BookEntry, UserBooksResponse
-from app.books.books_utils import add_book_to_shelf, get_user_books, delete_book_from_shelf
+from app.books.books_models import BookEntry, UserBooksResponse, UpdateShelfRequest
+from app.books.books_utils import add_book_to_shelf, get_user_books, delete_book_from_shelf, update_book_shelf
 from app.auth.auth_utils import get_current_user
 
 books_router = APIRouter()
@@ -33,3 +33,14 @@ def remove_from_shelf(book_id: str, user_id: str = Depends(get_current_user)):
     if not success:
         raise HTTPException(status_code=404, detail="Book not found.")
     return {"message": "Book removed from the shelf."}
+
+@books_router.put("/api/bookshelf/{book_id}/shelf")
+def modify_shelf(book_id: str, request: UpdateShelfRequest, user_id: str = Depends(get_current_user)):
+    """
+    Modify the shelf of a book.
+    """
+    new_shelf = request.new_shelf
+    success = update_book_shelf(user_id, book_id, new_shelf)
+    if not success:
+        raise HTTPException(status_code=404, detail="Book not found or update failed.")
+    return {"message": f"Book moved to '{new_shelf}' shelf."}

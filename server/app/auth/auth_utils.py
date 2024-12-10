@@ -11,7 +11,8 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # Configuration
 SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 2880  # Two days in minutes
+
 
 # OAuth2PasswordBearer scheme to extract token
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
