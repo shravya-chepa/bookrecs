@@ -1,6 +1,12 @@
 .home {
   padding: 20px;
   font-family: Arial, sans-serif;
+  margin-bottom: 70px; /* Add space after the content */
+  display: flex; /* Use flexbox for centering */
+  flex-direction: column; /* Stack the elements vertically */
+  align-items: center; /* Horizontally center the content */
+  justify-content: center; /* Vertically center the content */
+  min-height: calc(100vh - 70px); /* Ensure it takes at least the full viewport height minus margin-bottom */
 }
 
 h1 {
@@ -12,6 +18,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: center; /* Center the list horizontally */
 }
 
 .book-card {
